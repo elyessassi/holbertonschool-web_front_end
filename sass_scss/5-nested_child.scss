@@ -1,0 +1,8 @@
+/* assigning color to parent and direct child */
+
+body {
+    color: #3D3D3D;
+    > .red {
+        color: #FF0000;
+    }
+}
