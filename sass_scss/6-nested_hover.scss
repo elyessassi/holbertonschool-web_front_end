@@ -1,0 +1,8 @@
+/* assigning color to parent and changing hover color */
+
+button {
+    color: #FF0000;
+    &:hover {
+        color: #00FF00;
+    }
+}
