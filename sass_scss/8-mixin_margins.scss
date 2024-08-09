@@ -1,0 +1,12 @@
+/* creating mixin and assigning it */
+
+@mixin mixin($margin_value: 10px) {
+    margin-left: $margin_value;
+    margin-right: $margin_value;
+}
+body {
+    @include mixin
+}
+div {
+    @include mixin($margin_value: 15px)
+}
