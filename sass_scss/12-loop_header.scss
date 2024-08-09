@@ -1,0 +1,7 @@
+/* creates H* tags, where ‘*’ is the size of the font used */
+
+@for $number from 1 to 6 {
+    h#{$number} {
+        font-size: #{$number}px;
+    }
+}
