@@ -1,0 +1,11 @@
+/*assigning color using variable*/
+
+$var: #3D3D3D;
+
+body {
+    color: $var;
+}
+
+p {
+    color: $var;
+}
