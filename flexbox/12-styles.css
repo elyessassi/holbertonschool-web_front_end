@@ -555,11 +555,10 @@
     .post {
       display: flex;
     }
-    .post-content {
+    .post .post-content {
       width: 100%;
     }
-    .post-aside {
+    .post .post-aside {
       order: -1;
       min-width: 20%;
     }
-    
