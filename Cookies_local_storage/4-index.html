@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookies</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
+    <script>
+    
+        function setCookiesAndShowWelcomeMessage() {
+            Cookies.set("firstname",`${document.getElementById("fn").value}`,{expires:10})
+            Cookies.set("email",`${document.getElementById("email").value}`,{expires:10})
+            showWelcomeMessageOrForm()
+        }
+        function showCookies() {
+            let x = document.createElement("p")
+            x.textContent = `Email: ${Cookies.get("email")} - Firstname: ${Cookies.get("firstname")}`
+            document.body.appendChild(x)
+        }
+        function showForm(){
+            if (document.getElementById("header")) {
+                document.getElementById("header").remove()
+            }
+            let x = document.getElementById("form")
+            x.style.display = "block"
+        }
+        function hideForm() {
+            let x = document.getElementById("form");
+            x.style.display = "none";
+
+        }
+        function deleteCookiesAndShowForm() {
+            Cookies.remove("firstname")
+            Cookies.remove("email")
+            showForm()
+        }
+        function showWelcomeMessageOrForm() {
+            if (document.cookie == "") {
+                showForm()
+            }
+            else {
+                hideForm()
+                let x = document.createElement("h1")
+                let a = document.createElement("a")
+                a.onclick = deleteCookiesAndShowForm
+                a.textContent = "(logout)"
+                a.style.fontStyle = "italic"
+                a.style.paddingLeft = "10px"
+                a.style.fontWeight = "normal"
+                x.textContent = `Welcome ${Cookies.get("firstname")} `
+                x.setAttribute("id", "header")
+                x.appendChild(a)
+                document.body.appendChild(x)
+            }
+        }
+        window.onload = showForm;
+    </script>
+</head>
+<body>
+    <div id="form">
+        <h1>Login to the website</h1>
+        <input placeholder="Firstname" id="fn">
+        <input placeholder="Email" id="email">
+        <button style="background-color: white; border-color: whitesmoke ; border-radius: 15%;" onclick="setCookiesAndShowWelcomeMessage()"> Log me in</button>
+    </div>
+
+
+</body>
+</html>
