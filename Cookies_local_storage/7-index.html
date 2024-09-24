@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Shopping cart</title>
+    <script>
+        let availableItems = ["Shampoo","Soap","Sponge","Water"]
+        if (typeof(sessionStorage) == "undefined"){
+            alert("Sorry, your browser does not support Web storage. Try again with a better one")
+        }
+        let cart = {}
+        function getCartFromStorage() {
+            let JSON_cart = JSON.parse(sessionStorage.getItem("cart"))
+        }
+        // function to add the selected item to cart
+        function addItemToCart(item) {
+            if (!cart[item]){
+                cart[item] = 1
+            }
+            else {
+                cart[item] = cart[item] + 1
+            }
+            sessionStorage.setItem("cart",`${JSON.stringify(cart)}`)
+            displayCart()
+        }
+        // function to remove one item from the cart (if there is 2 or more of the same item it will remove them all)
+        function removeItemfromCart(item) {
+            delete cart[item]
+            sessionStorage.setItem("cart",`${JSON.stringify(cart)}`)
+            displayCart()
+        }
+        //function to clear the cart
+        function clearCart() {
+            let list_of_properties = Object.keys(cart)
+            for (let i = 0; i < list_of_properties.length; i++) {
+                delete cart[list_of_properties[i]]
+            }
+            sessionStorage.setItem("cart",`${JSON.stringify(cart)}`)
+            displayCart()
+        }
+        //Initial function to start the store
+        function createStore() {
+            let title = document.createElement("h2")
+            title.textContent = "Available products:"
+            document.body.appendChild(title)
+            let ul = document.createElement("ul")
+            for (let i = 0; i < availableItems.length; i++){
+                
+                let available_item = document.createElement("li")
+                available_item.textContent = availableItems[i]
+                available_item.onclick = () => addItemToCart(availableItems[i])
+                ul.appendChild(available_item)        
+            }
+            document.body.appendChild(ul)
+        }
+        //function to display the cart (it will create the div that will contain the unordred list that will be created later in the funtion updateCart)
+        function displayCart() {
+            if (document.getElementById("mytitle")) {
+                document.getElementById("mytitle").remove()
+            }
+            if (document.getElementById("mylist")) {
+                document.getElementById("mylist").remove()
+            }
+            let title = document.createElement("h2")
+            title.textContent = "Your cart:"
+            title.setAttribute("id", "mytitle")
+            document.body.appendChild(title)
+            let mylist = document.createElement("div")
+            mylist.setAttribute("id","mylist")
+            document.body.appendChild(mylist)
+            updateCart()
+        }
+        // function to update the cart after each modification
+        function updateCart() {
+            let divTag = document.getElementById("mylist")
+            let obj_content = Object.entries(cart)
+            if (obj_content.length == 0){
+                let ul = document.createElement("ul")
+                let li = document.createElement("li")
+                li.textContent = "Your cart is empty"
+                ul.appendChild(li)
+                divTag.appendChild(ul)
+            }
+            else {
+                let ul = document.createElement("ul")
+                let li = document.createElement("li")
+
+                li.textContent = "Clear my cart"
+                li.setAttribute("onclick", "clearCart()")
+
+                ul.appendChild(li)
+                for (let i = 0; i < obj_content.length; i++) {
+                    let li = document.createElement("li")
+                    let a = document.createElement("a")
+                    li.textContent = `${obj_content[i][0]} x ${obj_content[i][1]} `
+                    a.textContent = "(remove)"
+                    a.addEventListener("click", () => removeItemfromCart(obj_content[i][0]))
+                    li.appendChild(a)
+                    ul.appendChild(li)
+                }
+                divTag.appendChild(ul)
+                
+            }
+        }
+        window.onload = createStore;
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
