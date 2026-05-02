@@ -1,8 +1,8 @@
 /* creating classes using @each and assigning background images depending on the name*/
 
-@import "11-photos";
+@use "11-photos" as photos;
 
-@each $name in $list-names {
+@each $name in photos.$list-names {
     .photo-#{$name} {
         background: image-url("photos/#{$name}.jpg") no-repeat;
     }
